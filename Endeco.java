@@ -38,7 +38,6 @@ public class Endeco {
             encoded+='V';
             i=index+1;
         }
-        // return encoded.substring(0,encoded.length()-1);
         return encoded;
     }
 
@@ -76,20 +75,30 @@ public class Endeco {
     public static void main(String[] args) {
         Endeco ed = new Endeco();
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter Your Secret Message: ");
-        String message = sc.nextLine();
-        String encoded = ed.encoder(message);
-        System.out.println("Encoded Message: "+encoded);
+        String message, encoded, decoded;
+        System.out.println("Press:\n1: Encode\n2: Decode");
+        int ch = sc.nextInt();
+        sc.nextLine();
+        switch(ch){
+            case 1:
+                System.out.print("Enter Your Secret Message: ");
+                message = sc.nextLine();
+                System.out.println(message.length());
+                encoded = ed.encoder(message);
+                System.out.println("Encoded Message: "+encoded);
+                System.out.println(encoded.length());
+                break;
 
-        encoded = ed.encoder(encoded);
-        System.out.println("Encoded: "+encoded);
+            case 2:
+                System.out.print("Enter Your Secret Message: ");
+                encoded = sc.nextLine()+" ";
+                decoded = ed.decoder(encoded);
+                System.out.println("Decoded Message: "+decoded);
+                break;
 
-        String decoded = ed.decoder(encoded).trim();
-        System.out.println("Decoded Message: "+decoded);
-
-        decoded = ed.decoder(decoded).trim();
-        System.out.println("Decoded: "+decoded);
-        
+            default:
+                System.out.println("Wrong Choice!");
+        }
         sc.close();
     }
 }
