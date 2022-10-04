@@ -1,5 +1,4 @@
-import java.util.Scanner;
-
+import java.util.*;
 public class Endeco { 
     String firstcode = "jHxLqYk4NI~liRg!{;KfnrAhd3", secondcode = "QvE^wG6Cys}|:<PmuD?[obFgJZ";
     String symbols="`1234567890-=~!@#$%^&*()_+[]\\;',./{} |:\"<>?",
