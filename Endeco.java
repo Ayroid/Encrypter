@@ -1,28 +1,22 @@
 import java.util.*;
 public class Endeco { 
     String firstcode = "jHxLqYkiR4NI~!{;KflgnrAhd3", secondcode = "QvE^wG6C s}|:<PmuD?[obFgJZ";
-    String symbols="`1234567890-=~!@#$%^&*()_+[]\\;',./{} |:\"<>?",
-        thirdcode= "@+\"NtOcS>=a90-78',.\\5p1yUT]2eBX#$%_zV`&*()/";
+    String symbols="`1234567890-=~!@#$%^&*()_+[]\\;',./{} |:\"<>?", thirdcode= "@+\"NtOcS>=a90-78',.\\5p1yUT]2eBX#$%_zV`&*()/";
     
-    public String wordReverser(String s){
-        if(s.trim().length()==1){
+    public String stringReverser(String s){
+        if(s.length()==1){
             return s;
         }
         else{
             int mid = s.length()/2;
-            return wordReverser(s.substring(mid,s.length())) + wordReverser(s.substring(0, mid));
+            return stringReverser(s.substring(mid,s.length())) + stringReverser(s.substring(0, mid));
         }
     }
-    
+
     public String encoder(String input){
-        input+=" ";
         String encoded="";
-        for(int i=0;i<input.length();){
-            int index = input.indexOf(" ", i);
-            String word = input.substring(i, index);
-            word = wordReverser(word);
-            for(int j=0;j<word.length();j++){
-                int x = word.charAt(j);
+        for(int i=0;i<input.length();i++){
+                int x = input.charAt(i);
                 if(x>=65 && x<=90){
                     encoded += firstcode.charAt(x-65);
                 }
@@ -34,40 +28,37 @@ public class Endeco {
                     char ch = thirdcode.charAt(id);
                     encoded += ch;
                 }
-            }
-            encoded+='V';
-            i=index+1;
         }
-        return encoded;
+        return stringReverser(encoded.substring(encoded.length()/2,encoded.length())) + encoded.substring(0, encoded.length()/2);
     }
 
     public String decoder(String input){
-        String halfdec="", decoded="";
+        String decoded="";
+        if(input.length()%2==1){
+            input= input.substring((input.length()/2)+1,input.length()) + stringReverser(input.substring(0, (input.length()/2)+1));
+        }
+        else{
+            input= input.substring(input.length()/2,input.length()) + stringReverser(input.substring(0, input.length()/2));
+        }
         for(int i=0;i<input.length();i++){
             int pos=-1;
             while(pos==-1){
                 pos=firstcode.indexOf(input.charAt(i));
                 if(pos>-1){
-                    halfdec+=(char)(pos+65);
+                    decoded+=(char)(pos+65);
                     break;
                 }
                 pos=secondcode.indexOf(input.charAt(i));
                 if(pos>-1){
-                    halfdec+=(char)(pos+97);
+                    decoded+=(char)(pos+97);
                     break;
                 }
                 pos=thirdcode.indexOf(input.charAt(i));
                 if(pos>-1){
-                    halfdec+=symbols.charAt(pos);
+                    decoded+=symbols.charAt(pos);
                     break;
                 }
             }
-        }
-        for(int i=0;i<halfdec.length();){
-            int index = halfdec.indexOf(" ", i);
-            String word = halfdec.substring(i, index);
-            decoded += wordReverser(word)+" ";
-            i=index+1;
         }
         return decoded;
     }
@@ -91,7 +82,7 @@ public class Endeco {
 
             case 2:
                 System.out.print("Enter Your Secret Message: ");
-                encoded = sc.nextLine()+" ";
+                encoded = sc.nextLine();
                 decoded = ed.decoder(encoded);
                 System.out.println("Decoded Message: "+decoded);
                 break;
