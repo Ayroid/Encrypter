@@ -3,7 +3,7 @@ public class Endeco {
     String firstcode = "L8BNhPsW_+{IS9}|:\"2HlAKmn5", secondcode = "67pqr`1TUJoOdef\\;',./~!tuv";
     String symbols="`1234567890-=~!@ #$%^&*()_+[]\\;',./{}|:\"<>?", thirdcode= "F]@#$%MDE0ZaXYwxyzVgb34cijGQR-= [k^&*()C<>?";
 
-    public String stringReverser(String s){
+    public String stringReverser(String s){ // To reverse a String
         if(s.length()==1){
             return s;
         }
@@ -15,52 +15,52 @@ public class Endeco {
 
     public String encoder(String input){
         String encoded="";
-        for(int i=0;i<input.length();i++){
-                int x = input.charAt(i);
-                if(x>=65 && x<=90){
+        for(int i=0;i<input.length();i++){ // Traversing the input
+                int x = input.charAt(i);  // Extracting characters
+                if(x>=65 && x<=90){  // if character is capital alphabet, we encode it with first code
                     encoded += firstcode.charAt(x-65);
                 }
-                else if(x>=97 && x<=122){
+                else if(x>=97 && x<=122){ // if character is small alphabet, we encode it with second code
                     encoded += secondcode.charAt(x-97);
                 }
-                else{
+                else{ // if character is a symbol, we encode it with third code
                     int id = symbols.indexOf(x);
                     char ch = thirdcode.charAt(id);
                     encoded += ch;
                 }
         }
-        return stringReverser(encoded.substring(encoded.length()/2,encoded.length())) + encoded.substring(0, encoded.length()/2);
+        return stringReverser(encoded.substring(encoded.length()/2,encoded.length())) + encoded.substring(0, encoded.length()/2); // Reverse of 2nd half + 1st half of encoded text
     }
 
-    public String decoder(String input){
+    public String decoder(String encoded){
         String decoded="";
-        if(input.length()%2==1){
-            input= input.substring((input.length()/2)+1,input.length()) + stringReverser(input.substring(0, (input.length()/2)+1));
+        if(encoded.length()%2==1){ // rolling back changes made in line 32
+            encoded= encoded.substring((encoded.length()/2)+1,encoded.length()) + stringReverser(encoded.substring(0, (encoded.length()/2)+1)); // if string length is odd
         }
         else{
-            input= input.substring(input.length()/2,input.length()) + stringReverser(input.substring(0, input.length()/2));
+            encoded= encoded.substring(encoded.length()/2,encoded.length()) + stringReverser(encoded.substring(0, encoded.length()/2)); // if string length is even
         }
-        for(int i=0;i<input.length();i++){
+        for(int i=0;i<encoded.length();i++){ // traversing the encoded message
             int pos=-1;
             while(pos==-1){
-                pos=firstcode.indexOf(input.charAt(i));
-                if(pos>-1){
-                    decoded+=(char)(pos+65);
+                pos=firstcode.indexOf(encoded.charAt(i)); // finding index of character from first code
+                if(pos>-1){ // if found
+                    decoded+=(char)(pos+65); // add it to decoded
                     break;
                 }
-                pos=secondcode.indexOf(input.charAt(i));
-                if(pos>-1){
-                    decoded+=(char)(pos+97);
+                pos=secondcode.indexOf(encoded.charAt(i)); // finding index of character from second code
+                if(pos>-1){ // if found
+                    decoded+=(char)(pos+97); // add it to decoded
                     break;
                 }
-                pos=thirdcode.indexOf(input.charAt(i));
-                if(pos>-1){
-                    decoded+=symbols.charAt(pos);
+                pos=thirdcode.indexOf(encoded.charAt(i)); // finding index of character from third code
+                if(pos>-1){ // if found
+                    decoded+=symbols.charAt(pos); // add it to decoded
                     break;
                 }
             }
         }
-        return decoded;
+        return decoded; // returning decoded message
     }
 
     public static void main(String[] args) {
@@ -76,14 +76,14 @@ public class Endeco {
                 System.out.print("Enter Your Secret Message: ");
                 message = sc.nextLine();
                 Random rd = new Random();
-                turns = rd.nextInt(0,10);
-                copy = turns;
-                while(copy>=0){
-                    encoded = ed.encoder(message);
+                turns = rd.nextInt(0,10); // This is the number of times our message will be encoded
+                copy = turns; // copying value for further use
+                while(copy>=0){ // encoding message turns number of time
+                    encoded = ed.encoder(message); // encoding
                     message = encoded;
                     copy--;
                 }
-                encoded+=turns;
+                encoded+=turns; // adding number of times encoded to help in the decoding process
                 System.out.println("Encoded Message: "+encoded);
                 break;
 
@@ -91,14 +91,14 @@ public class Endeco {
                 System.out.print("Enter Your Secret Message: ");
                 encoded = sc.nextLine();
 
-                turns = Character.getNumericValue(encoded.charAt(encoded.length()-1));
-                if(!(turns>=0 && turns<=9))
+                turns = Character.getNumericValue(encoded.charAt(encoded.length()-1)); // Extracting number of times message has been encoded
+                if(!(turns>=0 && turns<=9)) // if the user does not include number of turns we assume 1 turn
                 turns=0;
 
-                encoded = encoded.substring(0, encoded.length()-1);
+                encoded = encoded.substring(0, encoded.length()-1); // removing the number of turns from encoded message
 
                 while(turns>=0){
-                    decoded = ed.decoder(encoded);
+                    decoded = ed.decoder(encoded); // decoding
                     encoded = decoded;
                     turns--;
                 }
