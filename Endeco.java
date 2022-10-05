@@ -68,11 +68,11 @@ public class Endeco {
         Scanner sc = new Scanner(System.in);
         String message="", encoded="", decoded="";
         int turns, copy;
-        System.out.println("Press:\n1: Encode\n2: Decode");
-        int ch = sc.nextInt();
+        System.out.println("Press:\nE: Encode\nD: Decode");
+        String ch = sc.next().toUpperCase();
         sc.nextLine();
         switch(ch){
-            case 1:
+            case "E":
                 System.out.print("Enter Your Secret Message: ");
                 message = sc.nextLine();
                 Random rd = new Random();
@@ -87,7 +87,7 @@ public class Endeco {
                 System.out.println("Encoded Message: "+encoded);
                 break;
 
-            case 2:
+            case "D":
                 System.out.print("Enter Your Secret Message: ");
                 encoded = sc.nextLine();
 
