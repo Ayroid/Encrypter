@@ -1,8 +1,8 @@
 import java.util.*;
 public class Endeco { 
-    String firstcode = "jHxLqYkiR4NI~!{;KflgnrAhd3", secondcode = "QvE^wG6C s}|:<PmuD?[obFgJZ";
-    String symbols="`1234567890-=~!@#$%^&*()_+[]\\;',./{} |:\"<>?", thirdcode= "@+\"NtOcS>=a90-78',.\\5p1yUT]2eBX#$%_zV`&*()/";
-    
+    String firstcode = "L8BNhPsW_+{IS9}|:\"2HlAKmn5", secondcode = "67pqr`1TUJoOdef\\;',./~!tuv";
+    String symbols="`1234567890-=~!@ #$%^&*()_+[]\\;',./{}|:\"<>?", thirdcode= "F]@#$%MDE0ZaXYwxyzVgb34cijGQR-= [k^&*()C<>?";
+
     public String stringReverser(String s){
         if(s.length()==1){
             return s;
@@ -66,7 +66,8 @@ public class Endeco {
     public static void main(String[] args) {
         Endeco ed = new Endeco();
         Scanner sc = new Scanner(System.in);
-        String message, encoded, decoded;
+        String message="", encoded="", decoded="";
+        int turns, copy;
         System.out.println("Press:\n1: Encode\n2: Decode");
         int ch = sc.nextInt();
         sc.nextLine();
@@ -74,16 +75,33 @@ public class Endeco {
             case 1:
                 System.out.print("Enter Your Secret Message: ");
                 message = sc.nextLine();
-                System.out.println(message.length());
-                encoded = ed.encoder(message);
+                Random rd = new Random();
+                turns = rd.nextInt(0,10);
+                copy = turns;
+                while(copy>=0){
+                    encoded = ed.encoder(message);
+                    message = encoded;
+                    copy--;
+                }
+                encoded+=turns;
                 System.out.println("Encoded Message: "+encoded);
-                System.out.println(encoded.length());
                 break;
 
             case 2:
                 System.out.print("Enter Your Secret Message: ");
                 encoded = sc.nextLine();
-                decoded = ed.decoder(encoded);
+
+                turns = Character.getNumericValue(encoded.charAt(encoded.length()-1));
+                if(!(turns>=0 && turns<=9))
+                turns=0;
+
+                encoded = encoded.substring(0, encoded.length()-1);
+
+                while(turns>=0){
+                    decoded = ed.decoder(encoded);
+                    encoded = decoded;
+                    turns--;
+                }
                 System.out.println("Decoded Message: "+decoded);
                 break;
 
