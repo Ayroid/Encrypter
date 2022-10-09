@@ -83,7 +83,10 @@ public class Endeco {
                     message = encoded;
                     copy--;
                 }
-                encoded+=turns; // adding number of times encoded to help in the decoding process
+                if(encoded.length()%2==0)
+                encoded=encoded+turns; // adding number of times encoded to help in the decoding process
+                else
+                encoded=turns+encoded; // adding number of times encoded to help in the decoding process
                 System.out.println("Encoded Message: "+encoded);
                 break;
 
@@ -91,11 +94,17 @@ public class Endeco {
                 System.out.print("Enter Your Secret Message: ");
                 encoded = sc.nextLine();
 
-                turns = Character.getNumericValue(encoded.charAt(encoded.length()-1)); // Extracting number of times message has been encoded
+                if((encoded.length()-1)%2==0){
+                    turns = Character.getNumericValue(encoded.charAt(encoded.length()-1)); // Extracting number of times message has been encoded
+                    encoded = encoded.substring(0, encoded.length()-1); // removing the number of turns from encoded message
+                }
+                else{
+                    turns = Character.getNumericValue(encoded.charAt(0)); // Extracting number of times message has been encoded
+                    encoded = encoded.substring(1, encoded.length()); // removing the number of turns from encoded message
+                }
+
                 if(!(turns>=0 && turns<=9)) // if the user does not include number of turns we assume 1 turn
                 turns=0;
-
-                encoded = encoded.substring(0, encoded.length()-1); // removing the number of turns from encoded message
 
                 while(turns>=0){
                     decoded = ed.decoder(encoded); // decoding
