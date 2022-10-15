@@ -6,7 +6,7 @@ import MessageEncrypter.Endeco;
 import java.io.*;
 public class FileEncryption extends Endeco{
 
-    public void encrypt(String filename) throws IOException{
+    public boolean encrypt(String filename) throws IOException{
         File obj = new File(filename);
         String encoded = "";
         Scanner reader = null;
@@ -14,7 +14,7 @@ public class FileEncryption extends Endeco{
             reader = new Scanner(obj);
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return;
+            return false;
         }
         FileWriter writer = null;
         writer = new FileWriter("FileWindow\\encoded.txt", false);
@@ -36,9 +36,10 @@ public class FileEncryption extends Endeco{
         }
         reader.close();
         writer.close();
+        return true;
     }
 
-    public void decrypt(String filename) throws IOException{
+    public boolean decrypt(String filename) throws IOException{
         File obj = new File(filename);
         String decoded = ""; int turns=0;
         Scanner reader = null;
@@ -46,7 +47,7 @@ public class FileEncryption extends Endeco{
             reader = new Scanner(obj);
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
-            return;
+            return false;
         }
         FileWriter writer = null;
         writer = new FileWriter("FileWindow\\decoded.txt", false);
@@ -75,6 +76,7 @@ public class FileEncryption extends Endeco{
         }
         reader.close();
         writer.close();
+        return true;
     }
 
     public static void main(String[] args) {
@@ -90,7 +92,7 @@ public class FileEncryption extends Endeco{
                 System.out.print("Enter File Path: ");
                 filename = sc.nextLine();
                 try {
-                    f1.encrypt(filename);
+                    if(!f1.encrypt(filename)) break;
                 } catch (IOException e) {
                     System.out.println("IOException");
                     break;
