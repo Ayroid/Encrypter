@@ -1,16 +1,15 @@
+package Encoder;
 import java.util.*;
 public class Endeco { 
     String firstcode = "L8BNhPsW_+{IS9}|:\"2HlAKmn5", secondcode = "67pqr`1TUJoOdef\\;',./~!tuv";
     String symbols="`1234567890-=~!@ #$%^&*()_+[]\\;',./{}|:\"<>?", thirdcode= "F]@#$%MDE0ZaXYwxyzVgb34cijGQR-= [k^&*()C<>?";
 
     public String stringReverser(String s){ // To reverse a String
-        if(s.length()==1){
-            return s;
+        String reverse="";
+        for(int i = s.length()-1;i>=0;i--){
+            reverse+=s.charAt(i);
         }
-        else{
-            int mid = s.length()/2;
-            return stringReverser(s.substring(mid,s.length())) + stringReverser(s.substring(0, mid));
-        }
+        return reverse;
     }
 
     public String encoder(String input){
