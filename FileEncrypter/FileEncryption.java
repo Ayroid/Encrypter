@@ -1,7 +1,7 @@
 package FileEncrypter;
 import java.util.*;
 
-import Encoder.Endeco;
+import MessageEncrypter.Endeco;
 
 import java.io.*;
 public class FileEncryption extends Endeco{
@@ -17,7 +17,7 @@ public class FileEncryption extends Endeco{
             return;
         }
         FileWriter writer = null;
-        writer = new FileWriter("File Window\\encoded.txt", false);
+        writer = new FileWriter("FileWindow\\encoded.txt", false);
         Random random = new Random();
         while(reader.hasNextLine()){
             int turns = random.nextInt(0,10);
@@ -49,7 +49,7 @@ public class FileEncryption extends Endeco{
             return;
         }
         FileWriter writer = null;
-        writer = new FileWriter("File Window\\decoded.txt", false);
+        writer = new FileWriter("FileWindow\\decoded.txt", false);
         while(reader.hasNextLine()){
             String data = reader.nextLine();
             if(data.length()>0){
@@ -95,7 +95,7 @@ public class FileEncryption extends Endeco{
                     System.out.println("IOException");
                     break;
                 }
-                System.out.println("File Encrypted Successfully!\nFile Location: \"Text-Decoder-Encoder\\File Window\\encoded.txt\"");
+                System.out.println("File Encrypted Successfully!\nFile Location: \"Text-Decoder-Encoder\\FileWindow\\encoded.txt\"");
                 break;
             
             case "D":
@@ -107,7 +107,7 @@ public class FileEncryption extends Endeco{
                     System.out.println("IOException");
                     break;
                 }
-                System.out.println("File Decrypted Successfully\nFile Location: \"Text-Decoder-Encoder\\File Window\\decoded.txt\"");
+                System.out.println("File Decrypted Successfully\nFile Location: \"Text-Decoder-Encoder\\FileWindow\\decoded.txt\"");
                 break;
             default:
                 System.out.println("Wrong Choice!");
