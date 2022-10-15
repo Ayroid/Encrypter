@@ -1,4 +1,4 @@
-package Encoder;
+package MessageEncrypter;
 import java.util.*;
 public class Endeco { 
     String firstcode = "L8BNhPsW_+{IS9}|:\"2HlAKmn5", secondcode = "67pqr`1TUJoOdef\\;',./~!tuv";
