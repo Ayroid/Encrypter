@@ -6,7 +6,7 @@ import MessageEncrypter.Endeco;
 import java.io.*;
 public class FileEncryption extends Endeco{
 
-    public boolean encrypt(String filename) throws IOException{
+    public boolean encrypt(String filename, String extension) throws IOException{
         File obj = new File(filename);
         String encoded = "";
         Scanner reader = null;
@@ -18,6 +18,7 @@ public class FileEncryption extends Endeco{
         }
         FileWriter writer = null;
         writer = new FileWriter("FileWindow\\encoded.txt", false);
+        writer.append(encoder(extension)+"\n");
         Random random = new Random();
         while(reader.hasNextLine()){
             int turns = random.nextInt(10);
@@ -49,8 +50,9 @@ public class FileEncryption extends Endeco{
             System.out.println("File not found");
             return false;
         }
+        String extension = decoder(reader.nextLine());
         FileWriter writer = null;
-        writer = new FileWriter("FileWindow\\decoded.txt", false);
+        writer = new FileWriter("FileWindow\\decoded."+extension, false);
         while(reader.hasNextLine()){
             String data = reader.nextLine();
             if(data.length()>0){
@@ -83,9 +85,10 @@ public class FileEncryption extends Endeco{
         FileEncryption f1 = new FileEncryption();
         Scanner sc = new Scanner(System.in);
         String filename ="";
-        System.out.println("Instructions:\nEncoded & Decoded Files can be collected from:\n\"Text-Decoder-Encoder\\Files\\\"");
-        System.out.println("Press:\nE: Encode\nD: Decode");
+        System.out.println("Instructions:\nEncoded & Decoded Files can be collected from:\n\"Text-Decoder-Encoder\\FileWindow\\\"");
+        System.out.println("Press:\nE: Encrypt\nD: Decrypt");
         String ch = sc.next().toUpperCase();
+        String extension = "";
         sc.nextLine();
         switch(ch){
             case "E":
@@ -93,9 +96,10 @@ public class FileEncryption extends Endeco{
                 filename = sc.nextLine();
                 if(filename.charAt(0)=='"'){
                     filename = filename.substring(1,filename.length()-1);
+                    extension = filename.substring(filename.indexOf(".")+1, filename.length());
                 }
                 try {
-                    if(!f1.encrypt(filename)) break;
+                    if(!f1.encrypt(filename, extension)) break;
                 } catch (IOException e) {
                     System.out.println("IOException");
                     break;
