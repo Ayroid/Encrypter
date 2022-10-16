@@ -20,7 +20,7 @@ public class FileEncryption extends Endeco{
         writer = new FileWriter("FileWindow\\encoded.txt", false);
         Random random = new Random();
         while(reader.hasNextLine()){
-            int turns = random.nextInt(0,10);
+            int turns = random.nextInt(10);
             String data = reader.nextLine();
             int copy = turns;
             while(copy>=0){ 
@@ -91,6 +91,9 @@ public class FileEncryption extends Endeco{
             case "E":
                 System.out.print("Enter File Path: ");
                 filename = sc.nextLine();
+                if(filename.charAt(0)=='"'){
+                    filename = filename.substring(1,filename.length()-1);
+                }
                 try {
                     if(!f1.encrypt(filename)) break;
                 } catch (IOException e) {

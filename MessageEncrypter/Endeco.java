@@ -75,7 +75,7 @@ public class Endeco {
                 System.out.print("Enter Your Secret Message: ");
                 message = sc.nextLine();
                 Random rd = new Random();
-                turns = rd.nextInt(0,10); // This is the number of times our message will be encoded
+                turns = rd.nextInt(10); // This is the number of times our message will be encoded
                 copy = turns; // copying value for further use
                 while(copy>=0){ // encoding message turns number of time
                     encoded = ed.encoder(message); // encoding
